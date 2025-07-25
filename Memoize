@@ -1,0 +1,25 @@
+// Given a function fn, return a memoized version of that function.
+
+// A memoized function is a function that will never be called twice with the same inputs. Instead it will return a cached value.
+
+function memoize(fn) {
+    const cache = new Map();
+    let callCount = 0;
+    
+    const memoized = function(...args) {
+        const key = JSON.stringify(args);
+
+        if (cache.has(key)) {
+           return cache.get(key);
+        }
+
+        const result = fn(...args);
+        cache.set(key, result);
+        callCount++;
+        return result; 
+    }
+    memoized.getCallCount = () => callCount;
+
+    return memoized;
+
+}
